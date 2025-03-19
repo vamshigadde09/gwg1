@@ -43,6 +43,10 @@ app.use(
   })
 );
 
+app.get("/", (req, res) => {
+  res.send("Welcome to GrowWithGuru API!");
+});
+
 //routes
 app.use("/api/v1/user", require("./routes/userRoutes"));
 app.use("/api/v1/interview", require("./routes/interviewRequestRoutes"));
