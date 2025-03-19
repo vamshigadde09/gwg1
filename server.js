@@ -4,66 +4,48 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const cors = require("cors");
-const helmet = require("helmet"); // Add Helmet for security headers
+const helmet = require("helmet");
+const path = require("path");
 
-//dotenv config
+// Load environment variables
 dotenv.config();
 
-//mongodb connection
+// Connect to MongoDB
 connectDB();
 
-//rest object
+// Initialize Express app
 const app = express();
 
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-        fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
-        imgSrc: ["'self'", "data:", "https://*"],
-        connectSrc: ["'self'", "https://*"],
-      },
-    },
-  })
-);
+// Security Headers
+app.use(helmet());
 
-//middlewares
+// Middleware
 app.use(morgan("dev"));
-app.use(express.json({ limit: "10mb" })); // Updated payload limit
+app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
-app.use(morgan("dev"));
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://your-frontend-url.com"], // Add deployed frontend
+    origin: ["http://localhost:3000", "https://gwg1.onrender.com"], // Allow frontend
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
 );
 
-app.get("/", (req, res) => {
-  res.send("Welcome to GrowWithGuru API!");
-});
-
-//routes
+// API Routes
 app.use("/api/v1/user", require("./routes/userRoutes"));
 app.use("/api/v1/interview", require("./routes/interviewRequestRoutes"));
-app.use("/api/v1/teacher", require("./routes/teacherRequestRoutes")); // Added teacher routes
+app.use("/api/v1/teacher", require("./routes/teacherRequestRoutes"));
 
-console.log("Registered Routes:");
-app._router.stack.forEach((r) => {
-  if (r.route && r.route.path) {
-    console.log(r.route.path);
-  }
+// 🛠 Serve Static Frontend (React Build)
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
 
-//port
+// Start Server
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
-  console.log(
-    `Server Running in ${process.env.NODE_ENV} Mode on port ${port}`.bgCyan
-      .white
-  );
+  console.log(`Server Running in ${process.env.NODE_ENV} Mode on port ${port}`);
 });
