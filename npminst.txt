@@ -1,0 +1,7 @@
+npm install react-router-dom react-redux axios antd @mui/material @mui/icons-material react-select react-simple-star-rating @reduxjs/toolkit @tanstack/react-query --legacy-peer-deps
+
+
+npm install morgan
+npm install colors
+npm install bcryptjs
+npm install jsonwebtoken
