@@ -52,6 +52,13 @@ app.use("/api/v1/user", require("./routes/userRoutes"));
 app.use("/api/v1/interview", require("./routes/interviewRequestRoutes"));
 app.use("/api/v1/teacher", require("./routes/teacherRequestRoutes")); // Added teacher routes
 
+console.log("Registered Routes:");
+app._router.stack.forEach((r) => {
+  if (r.route && r.route.path) {
+    console.log(r.route.path);
+  }
+});
+
 //port
 const port = process.env.PORT || 8080;
 app.listen(port, () => {

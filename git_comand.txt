@@ -32,6 +32,6 @@ git remote add origin "https://github.com/vamshigadde09/gwg1.git"
 
 git add .
 
-git commit -m "sample"
+git commit -m "sample1"
 
 git push -u origin main
