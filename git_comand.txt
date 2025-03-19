@@ -28,7 +28,7 @@ git checkout -b <branch-name>
   <!-- to remove previous origin -->
 git remote remove origin
 
-git remote add origin "https://github.com/vamshigadde09/gwg2.git"
+git remote add origin "https://github.com/vamshigadde09/gwg1.git"
 
 git add .
 
