@@ -7,8 +7,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const path = require("path");
 
-// ✅ Fix: Correct way to define `__dirname` in CommonJS
-const __dirname = path.resolve();
+// ✅ Fix: Ensure `__dirname` is only declared once
+const rootDir = path.resolve();
 
 // Load environment variables
 dotenv.config();
@@ -34,11 +34,11 @@ app.use(
   })
 );
 
-// ✅ Serve React Frontend
-app.use(express.static(path.join(__dirname, "client", "build")));
+// ✅ Serve React Frontend (Fixing `__dirname` issue)
+app.use(express.static(path.join(rootDir, "client", "build")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  res.sendFile(path.join(rootDir, "client", "build", "index.html"));
 });
 
 // ✅ API Routes
