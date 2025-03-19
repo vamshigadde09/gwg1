@@ -21,7 +21,7 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin: "http://localhost:3000", // Allow requests from frontend
+    origin: ["http://localhost:3000", "https://your-frontend-url.com"], // Add deployed frontend
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
@@ -36,7 +36,7 @@ app.use("/api/v1/teacher", require("./routes/teacherRequestRoutes")); // Added t
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(
-    `Server Running in ${process.env.NODE_MODE} Mode on port ${process.env.PORT}`
-      .bgCyan.white
+    `Server Running in ${process.env.NODE_ENV} Mode on port ${port}`.bgCyan
+      .white
   );
 });
