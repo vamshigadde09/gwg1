@@ -28,10 +28,10 @@ git checkout -b <branch-name>
   <!-- to remove previous origin -->
 git remote remove origin
 
-git remote add origin "https://github.com/vamshigadde09/growwithguru.git"
+git remote add origin "https://github.com/vamshigadde09/gwg1.git"
 
 git add .
 
-git commit -m "3_commit(deploy)"
+git commit -m "sample"
 
-git push -u origin test2
+git push -u origin main

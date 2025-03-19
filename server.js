@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const cors = require("cors");
+const helmet = require("helmet"); // Add Helmet for security headers
 
 //dotenv config
 dotenv.config();
@@ -13,6 +14,21 @@ connectDB();
 
 //rest object
 const app = express();
+
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
+        imgSrc: ["'self'", "data:", "https://*"],
+        connectSrc: ["'self'", "https://*"],
+      },
+    },
+  })
+);
 
 //middlewares
 app.use(morgan("dev"));
