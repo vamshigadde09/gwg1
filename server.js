@@ -31,20 +31,20 @@ app.use(
   })
 );
 
-// API Routes
-app.use("/api/v1/user", require("./routes/userRoutes"));
-app.use("/api/v1/interview", require("./routes/interviewRequestRoutes"));
-app.use("/api/v1/teacher", require("./routes/teacherRequestRoutes"));
-
-// 🛠 Serve Static Frontend (React Build)
+// ✅ Serve React Frontend
 const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 });
 
-// Start Server
+// ✅ API Routes
+app.use("/api/v1/user", require("./routes/userRoutes"));
+app.use("/api/v1/interview", require("./routes/interviewRequestRoutes"));
+app.use("/api/v1/teacher", require("./routes/teacherRequestRoutes"));
+
+// ✅ Start Server
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`Server Running in ${process.env.NODE_ENV} Mode on port ${port}`);
